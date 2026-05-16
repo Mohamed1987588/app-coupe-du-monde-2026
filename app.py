@@ -1,15 +1,22 @@
 import streamlit as st
 import pandas as pd
 
-# 1. Configuration de la page
+# 1. Configuration de la page (DOIT ABSOLUMENT ÊTRE LA PREMIÈRE COMMANDE)
 st.set_page_config(
-    # --- Ajout de l'arrière-plan personnalisé ---
-url_image = "https://cloudfront-eu-central-1.images.arcpublishing.com/le360/JL5SGRCFUVGJNKENHA7L2ZQPXU.jpg"
+    page_title="Sélection Coupe du Monde 2026",
+    page_icon="⚽",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# --- Ajout de l'arrière-plan personnalisé ---
+# J'ai mis un lien vers le drapeau par défaut, vous pourrez le changer plus tard si vous voulez !
+url_image = "https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Morocco.svg"
 
 page_bg_img = f"""
 <style>
 .stApp {{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("{url_image}");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("{url_image}");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -18,14 +25,11 @@ page_bg_img = f"""
 """
 st.markdown(page_bg_img, unsafe_allow_html=True)
 # -------------------------------------------
-    page_title="Sélection Coupe du Monde 2026",
-    page_icon="⚽",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
 
 # 2. Fonction de nettoyage intelligente pour vos fichiers spécifiques
 @st.cache_data
+def load_and_clean_data(file_path, is_global_list=True):
+# ... (le reste de votre code reste exactement pareil en dessous) ...
 def load_and_clean_data(file_path, is_global_list=True):
     df_raw = None
     # Test des encodages pour éviter l'erreur d'accent (UnicodeDecodeError)
