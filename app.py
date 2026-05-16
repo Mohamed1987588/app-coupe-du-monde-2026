@@ -9,8 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- Ajout de l'arrière-plan personnalisé ---
-# J'ai mis un lien vers le drapeau par défaut, vous pourrez le changer plus tard si vous voulez !
+# --- Ajout de l'arrière-plan personnalisé (Drapeau Marocain) ---
 url_image = "https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Morocco.svg"
 
 page_bg_img = f"""
@@ -24,12 +23,10 @@ page_bg_img = f"""
 </style>
 """
 st.markdown(page_bg_img, unsafe_allow_html=True)
-# -------------------------------------------
+# -------------------------------------------------------------
 
-# 2. Fonction de nettoyage intelligente pour vos fichiers spécifiques
+# 2. Fonction de nettoyage intelligente pour vos fichiers
 @st.cache_data
-def load_and_clean_data(file_path, is_global_list=True):
-# ... (le reste de votre code reste exactement pareil en dessous) ...
 def load_and_clean_data(file_path, is_global_list=True):
     df_raw = None
     # Test des encodages pour éviter l'erreur d'accent (UnicodeDecodeError)
@@ -40,7 +37,7 @@ def load_and_clean_data(file_path, is_global_list=True):
         except UnicodeDecodeError:
             continue
         except FileNotFoundError:
-            st.error(f"❌ Le fichier '{file_path}' est introuvable. Assurez-vous qu'il est exactement dans le même dossier que app.py.")
+            st.error(f"❌ Le fichier '{file_path}' est introuvable. Assurez-vous qu'il est bien sur GitHub.")
             return pd.DataFrame()
             
     if df_raw is None or df_raw.empty:
@@ -49,7 +46,7 @@ def load_and_clean_data(file_path, is_global_list=True):
     cleaned_rows = []
     current_poste = "Inconnu"
 
-    # Parcours et restructuration ligne par ligne pour rendre le tout professionnel
+    # Parcours et restructuration ligne par ligne
     for idx, row in df_raw.iterrows():
         val_0 = str(row.get(0, '')).strip()
         val_1 = str(row.get(1, '')).strip()
@@ -58,11 +55,11 @@ def load_and_clean_data(file_path, is_global_list=True):
         # --- CAS 1 : Traitement du fichier global ---
         if is_global_list:
             if val_0.lower() == 'poste' and val_1.lower() == 'club':
-                continue # Ignore la ligne d'en-tête répétée
+                continue
             if val_0 and val_0.lower() not in ['nan', '']:
-                current_poste = val_0 # Capture le poste (ex: Gardien, Défenseurs)
+                current_poste = val_0
             if not val_2 or val_2.lower() == 'nan':
-                continue # Saute les lignes vides
+                continue
                 
             cleaned_rows.append({
                 "Poste": current_poste,
@@ -74,9 +71,8 @@ def load_and_clean_data(file_path, is_global_list=True):
                 "Lien Fotmob": str(row.get(7, '')).strip()
             })
             
-        # --- CAS 2 : Traitement de "Ma Liste" (avec numérotation en colonne 0) ---
+        # --- CAS 2 : Traitement de "Ma Liste" ---
         else:
-            # Détection des lignes de catégories isolées (ex: Gardien;;;;;)
             if val_0 and (val_1 == '' or val_1.lower() == 'nan') and (val_2 == '' or val_2.lower() == 'nan'):
                 if val_0.lower() == 'diffence':
                     current_poste = "Défenseurs"
@@ -87,7 +83,7 @@ def load_and_clean_data(file_path, is_global_list=True):
                 continue
                 
             if val_1.lower() == 'club' or not val_2 or val_2.lower() == 'nan':
-                continue # Ignore les en-têtes internes et les lignes vides
+                continue
                 
             cleaned_rows.append({
                 "Poste": current_poste,
@@ -103,11 +99,11 @@ def load_and_clean_data(file_path, is_global_list=True):
     df_final = pd.DataFrame(cleaned_rows)
     return df_final
 
-# Noms des fichiers (doivent être dans le même dossier)
+# Noms exacts de vos fichiers sur GitHub
 FILE_GLOBAL = "listes des joueurs Coupe du Monde 2026.csv"
 FILE_MY_LIST = "Ma liste des joueurs Coupe du Monde 2026.csv"
 
-# Chargement des bases nettoyées
+# Chargement des bases
 df_my_list = load_and_clean_data(FILE_MY_LIST, is_global_list=False)
 df_global = load_and_clean_data(FILE_GLOBAL, is_global_list=True)
 
