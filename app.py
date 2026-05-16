@@ -4,7 +4,7 @@ import pandas as pd
 # 1. Configuration de la page
 st.set_page_config(
     # --- Ajout de l'arrière-plan personnalisé ---
-url_image = "https://lematin.ma/lematin/uploads/images/2025/10/20/457027.jpg"
+url_image = "https://cloudfront-eu-central-1.images.arcpublishing.com/le360/JL5SGRCFUVGJNKENHA7L2ZQPXU.jpg"
 
 page_bg_img = f"""
 <style>
