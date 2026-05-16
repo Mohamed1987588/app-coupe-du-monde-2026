@@ -4,7 +4,7 @@ import pandas as pd
 # 1. Configuration de la page
 st.set_page_config(
     # --- Ajout de l'arrière-plan personnalisé ---
-url_image = "https://www.google.com/imgres?q=%C3%89quipe%20du%20Maroc%20Ouahbi%20fond%20d%27%C3%A9cran&imgurl=https%3A%2F%2Flematin.ma%2Flematin%2Fuploads%2Fimages%2F2025%2F10%2F20%2F457027.webp&imgrefurl=https%3A%2F%2Flematin.ma%2Fsports%2Fsm-le-roi-a-pose-les-bases-dune-renaissance-du-football-ouahbi%2F308558&docid=87pXKki8TEyhYM&tbnid=RPwgce-sRvDM0M&vet=12ahUKEwjH8MSYx76UAxXAZqQEHe8QIywQnPAOegQIGxAB..i&w=1000&h=570&hcb=2&ved=2ahUKEwjH8MSYx76UAxXAZqQEHe8QIywQnPAOegQIGxAB"
+url_image = "https://lematin.ma/lematin/uploads/images/2025/10/20/457027.jpg"
 
 page_bg_img = f"""
 <style>
